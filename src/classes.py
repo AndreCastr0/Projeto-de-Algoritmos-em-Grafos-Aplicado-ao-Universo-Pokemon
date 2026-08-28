@@ -49,14 +49,20 @@ class Treinador:
         pokemons_excedentes=None,
         pokebolas=7,
         incubadoras=1,
-        insignias=None
+        insignias=None,
+        inimigo=False,
+        lider_ginasio=False
     ):
         self.posicao = posicao
         self.xp = xp
-        self.pokemons_ativos = pokemons_ativos if pokemons_ativos is not None else []
+        self.pokemons_ativos = (
+            pokemons_ativos if pokemons_ativos is not None else []
+        )
         self.pokemons_excedentes = (
             pokemons_excedentes if pokemons_excedentes is not None else []
         )
         self.pokebolas = pokebolas
         self.incubadoras = incubadoras
         self.insignias = insignias if insignias is not None else set()
+        self.inimigo = inimigo
+        self.lider_ginasio = lider_ginasio

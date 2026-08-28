@@ -1,3 +1,6 @@
+from graph import Graph
+
+
 def read_input(path):
     n = 0 #numero de vértices
     m = 0 #numero de arestas
@@ -10,7 +13,7 @@ def read_input(path):
     q_herbs = 0
     q_gyms = 0 
 
-    pokemon_center = None #lista de localizações dos centros pokemon
+    pokemon_centers = None #lista de localizações dos centros pokemon
     professor_carvalho = None
     
 
@@ -53,7 +56,7 @@ def read_input(path):
             q_gyms = int(tokens[1])
 
         elif key == 'h':
-            pokemon_center = int(tokens[1]) #vertices que representam as localizações dos centros pokemon
+            pokemon_centers = int(tokens[1]) #vertices que representam as localizações dos centros pokemon
 
         elif key == 'c':
             professor_carvalho = int(tokens[1]) #vertice que representa a localização do Lab professor carvalho
@@ -71,3 +74,54 @@ def read_input(path):
         pokemon_centers,
         professor_carvalho,
     )
+
+
+
+
+def exibir_listas_grafo(graph, n):
+    print("Lista de adjacência:")
+
+    for u in range(1, n + 1):
+        vizinhos = graph.get_neighbors(u)
+
+        linha = f"[v{u}]"
+
+        for v, weight in vizinhos:
+            linha += f" ---{weight}---> [v{v}]"
+
+        print(linha)
+        print("\n")
+
+
+
+def exibir_dados_arquivo(dados):
+    print("----Exibindo data.txt--- \n")
+
+    n = dados[0]
+    m = dados[1]
+    w_edges = dados[2]
+
+    q_pokemons = dados[3]
+    q_trainers = dados[4]
+    q_eggs = dados[5]
+    q_herbs = dados[6]
+    q_gyms = dados[7]
+    pokemon_center = dados[8]
+    professor_carvalho = dados[9]
+
+    print("Número de vértices:", n)
+    print("Número de arestas:", m)
+
+    print("\nArestas:")
+    for u, v, weight in w_edges:
+        print(f"{u} -- {v} (peso: {weight})")
+
+    print("\nQuantidade de Pokémon:", q_pokemons)
+    print("Quantidade de treinadores:", q_trainers)
+    print("Quantidade de ovos:", q_eggs)
+    print("Quantidade de ervas:", q_herbs)
+    print("Quantidade de ginásios:", q_gyms)
+
+    print("\nQuantidade de centros pokemon:", pokemon_center)
+    print("Localização do laboratório do professor:", professor_carvalho)
+

@@ -10,7 +10,7 @@ def read_input(path):
     q_herbs = 0
     q_gyms = 0 
 
-    pokemon_centers = [] #lista de centros pokemon
+    pokemon_centers = [] #lista de localizações dos centros pokemon
     professor_carvalho = None
     #stadium = None 
 
@@ -54,13 +54,11 @@ def read_input(path):
 
         elif key == 'h':
             for token in tokens[1:]:
-                pokemon_centers.append(int(token))
+                pokemon_centers.append(int(token)) #vertices que representam as localizações dos centros pokemon
 
         elif key == 'c':
-            professor_carvalho = int(tokens[1])
-
-        #elif key == 'l':
-            #stadium = int(tokens[1])
+            professor_carvalho = int(tokens[1]) #vertice que representa a localização do Lab professor carvalho
+            
 
     return (
         n,
@@ -73,5 +71,4 @@ def read_input(path):
         q_gyms,
         pokemon_centers,
         professor_carvalho,
-        #stadium
     )

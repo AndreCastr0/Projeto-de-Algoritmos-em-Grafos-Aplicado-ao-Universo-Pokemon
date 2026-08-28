@@ -10,9 +10,9 @@ def read_input(path):
     q_herbs = 0
     q_gyms = 0 
 
-    pokemon_centers = [] #lista de localizações dos centros pokemon
+    pokemon_center = None #lista de localizações dos centros pokemon
     professor_carvalho = None
-    #stadium = None 
+    
 
     with open(path, 'r') as f: #leitura de arquivo
         lines = f.readlines()
@@ -53,8 +53,7 @@ def read_input(path):
             q_gyms = int(tokens[1])
 
         elif key == 'h':
-            for token in tokens[1:]:
-                pokemon_centers.append(int(token)) #vertices que representam as localizações dos centros pokemon
+            pokemon_center = int(tokens[1]) #vertices que representam as localizações dos centros pokemon
 
         elif key == 'c':
             professor_carvalho = int(tokens[1]) #vertice que representa a localização do Lab professor carvalho

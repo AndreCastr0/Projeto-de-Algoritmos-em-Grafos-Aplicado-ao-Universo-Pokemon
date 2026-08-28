@@ -31,7 +31,7 @@ class Pokemon:
     def _definir_estado(self):
         if self.hp == 0:
             return self.INCONSCIENTE
-        elif 0 > self.hp <= 5:
+        elif 0 < self.hp <= 5:
             return self.MACHUCADO
         else:
             return self.CONSCIENTE

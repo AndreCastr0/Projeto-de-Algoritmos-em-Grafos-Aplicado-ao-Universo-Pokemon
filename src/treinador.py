@@ -37,6 +37,8 @@ class Treinador:
         self.inimigo = inimigo
         self.lider_ginasio = lider_ginasio
 
+        self.distancia_percorrida = 0
+
 
     def mover(self, graph, destino):
 
@@ -63,3 +65,22 @@ class Treinador:
             tempo_gasto += peso
 
         return caminho, tempo_gasto
+    
+
+
+    def adicionar_pokemon(self, pokemon):
+        if len(self.pokemons_ativos) < self.MAX_POKEMONS_ATIVOS:
+            self.pokemons_ativos.append(pokemon)
+            pokemon.posicao = self.posicao
+            return "ativo"
+
+        if len(self.pokemons_excedentes) < (
+            self.MAX_POKEMONS_TOTAL - self.MAX_POKEMONS_ATIVOS
+        ):
+            self.pokemons_excedentes.append(pokemon)
+            return "excedente"
+
+        return None
+
+
+      

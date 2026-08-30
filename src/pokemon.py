@@ -51,6 +51,9 @@ class Pokemon:
             return self.CONSCIENTE
 
 
+    def adicionar_xp(self, quantidade_xp):
+        self.xp += quantidade_xp
+
 
 def ler_pokedex(path):
     pokedex = []
@@ -107,3 +110,24 @@ def criar_pokemons(quantidade, numero_vertices, pokedex):
         pokemons.append(pokemon)
 
     return pokemons
+
+
+def criar_pokemon_da_especie(pokedex_no, posicao, pokedex):
+    especie = pokedex[pokedex_no]
+    
+    pokemon = Pokemon(
+        id=pokedex_no,
+        posicao=posicao,
+        nome=especie["name"],
+        tipo1=especie["type1"],
+        tipo2=especie["type2"],
+        possibilidade_evolucao=especie["pode_evoluir"],
+        fase_evolutiva=especie["fase_evolutiva"],
+        xp=0,
+        hp=random.randint(1, 100),
+        ap=random.randint(1, 100),
+        dp=random.randint(1, 100),
+        ataques=especie["moves"]
+    )
+
+    return pokemon

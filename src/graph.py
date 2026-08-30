@@ -21,6 +21,13 @@ class Graph:
         # Retorna a lista de vizinhos que está na posição 'u'
         return self.adj_list[u]
 
+    def get_edge_weight(self, u, v): #usado para atualizar o tempo
+        for neighbor, weight in self.adj_list[u]:
+            if neighbor == v:
+                return weight
+
+        return None
+
     def get_all_edges(self):
         # Pega todas as arestas
         edges = []

@@ -131,3 +131,6 @@ def criar_pokemon_da_especie(pokedex_no, posicao, pokedex):
     )
 
     return pokemon
+
+
+

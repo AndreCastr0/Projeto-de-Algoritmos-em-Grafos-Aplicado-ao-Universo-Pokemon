@@ -1,7 +1,7 @@
 from algorithms import dijkstra, reconstruir_caminho
 
 class Treinador:
-    MAX_POKEMONS_ATIVOS = 6 #os pokemons que passarem dessa quantidade são os que o professor esta armazenando
+    MAX_POKEMONS_ATIVOS = 6 # Máximo de Pokémon
 
     def __init__(
         self,
@@ -40,12 +40,13 @@ class Treinador:
         self.inimigo = inimigo
         self.lider_ginasio = lider_ginasio
 
+        # Controle de movimentação e acúmulo de experiência por distância
         self.distancia_percorrida = 0
         self.ultimo_xp_distancia = 0
 
 
     def mover(self, graph, destino):
-
+        # Calcula o menor caminho até o destino e realiza o deslocamento nó a nó
         distancias, predecessores = dijkstra(graph,self.posicao)
 
         caminho = reconstruir_caminho(predecessores,self.posicao,destino)
@@ -64,15 +65,14 @@ class Treinador:
             # O treinador se move.
             self.posicao = proximo
 
-            # Os Pokémon ativos acompanham o treinador.
+            #Atualiza posição do treinador e dos Pokémon ativos
             for pokemon in self.pokemons_ativos:
                 pokemon.posicao = proximo
 
             # Atualiza a distância total.
             self.distancia_percorrida += peso
 
-            # O peso da aresta representa o tempo/distância
-            # percorrido na jornada.
+            # O peso da aresta representa o tempo/distância percorrido na jornada.
             tempo_gasto += peso
 
             # XP por distância.
@@ -82,6 +82,7 @@ class Treinador:
 
 
     def capturar_pokemon(self, pokemon, pokemons_batalha=None):
+        # Tenta capturar um Pokémon selvagem, precisa estar inconsciente ter pokebolas pra funcionar
         if pokemon.estado != pokemon.INCONSCIENTE:
             return False
 
@@ -97,8 +98,7 @@ class Treinador:
             for pokemon_batalha in pokemons_batalha:
                 pokemon_batalha.adicionar_xp(3)
 
-        # Adiciona o Pokémon aos ativos ou solicita
-        # uma escolha caso já existam 6.
+        # Adiciona o Pokémon aos ativos ou solicita uma escolha caso já existam 6.
         self.escolher_pokemon_ativo(pokemon)
 
         return True
@@ -106,6 +106,7 @@ class Treinador:
 
 
     def _atualizar_xp_distancia(self):
+        # Concede 1 ponto de XP a cada 100 unidades de distância percorrida
         xp_atual = self.distancia_percorrida // 100
 
         xp_novo = xp_atual - self.ultimo_xp_distancia
@@ -118,19 +119,19 @@ class Treinador:
     
 
 
-    def adicionar_pokemon(self, pokemon): #adicionar um pokemon que acabou de ser capturado
+    def adicionar_pokemon(self, pokemon): #adicionar na equipe um pokemon que acabou de ser capturado
         if len(self.pokemons_ativos) < self.MAX_POKEMONS_ATIVOS:
             self.pokemons_ativos.append(pokemon)
             pokemon.posicao = self.posicao
             return "ativo"
 
-        # Já possui 6 ativos. O pokémon é adicionado temporariamente aos excedentes.
         self.pokemons_excedentes.append(pokemon)
 
         return "excedente"
 
 
     def trocar_pokemon(self, pokemon_ativo, pokemon_excedente): #trocar entre pokemon ativo e excedente
+        # Realiza a troca entre um Pokémon da equipe ativa e um armazenado
         if pokemon_ativo not in self.pokemons_ativos:
             return False
 
@@ -151,6 +152,7 @@ class Treinador:
 
 
     def escolher_pokemon_ativo(self, pokemon):
+        #scolher  qual Pokémon substituir caso a equipe esteja cheia
         if len(self.pokemons_ativos) < self.MAX_POKEMONS_ATIVOS:
             self.pokemons_ativos.append(pokemon)
             pokemon.posicao = self.posicao

@@ -1,7 +1,7 @@
 from graph import Graph
 
 
-def read_input(path):
+def read_input(path): #extrai os dados da entrada
     n = 0 #numero de vértices
     m = 0 #numero de arestas
     w_edges = [] #lista de conexões
@@ -58,9 +58,7 @@ def read_input(path):
         elif key == 'h':
             pokemon_centers = int(tokens[1]) #vertices que representam as localizações dos centros pokemon
 
-        elif key == 'c':
-            professor_carvalho = int(tokens[1]) #vertice que representa a localização do Lab professor carvalho
-            
+    
 
     return (
         n,

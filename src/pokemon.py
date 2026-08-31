@@ -4,6 +4,7 @@ import random
 from algorithms import dijkstra, reconstruir_caminho
 
 class Pokemon:
+    # Constantes para representação dos estados de saúde do Pokémon
     CONSCIENTE = "consciente"
     MACHUCADO = "machucado"
     INCONSCIENTE = "inconsciente"
@@ -37,12 +38,22 @@ class Pokemon:
         # Características da instância
         self.xp = xp
         self.hp = hp
+
+        # Atributos base iniciais
+        self.ap_inicial = ap
+        self.dp_inicial = dp
+
+        # Bônus acumulados em vitórias de duelos
+        self.pontos_batalha_ap = 0
+        self.pontos_batalha_dp = 0
+
+        # Atributos atuais recalculados
         self.ap = ap
         self.dp = dp
 
         self.estado = self._definir_estado()
 
-    def _definir_estado(self):
+    def _definir_estado(self): #Avalia os pontos de HP oara definir a saude
         if self.hp == 0:
             return self.INCONSCIENTE
         elif 0 < self.hp < 5:
@@ -51,11 +62,24 @@ class Pokemon:
             return self.CONSCIENTE
 
 
-    def adicionar_xp(self, quantidade_xp):
-        self.xp += quantidade_xp
+    def adicionar_xp(self, quantidade): # Adiciona experiência e atualiza o ataque e a defesa
+        self.xp += quantidade
+        self.atualizar_ap_dp()
+
+    def adicionar_pontos_batalha(self): # Concede bônus fixo de AP/DP por vitória em duelo com rival de XP igual ou maior
+        self.pontos_batalha_ap += 1
+        self.pontos_batalha_dp += 1
+        self.atualizar_ap_dp()
 
 
-def ler_pokedex(path):
+    def atualizar_ap_dp(self): #10%
+        # Recalcula AP e DP: valor inicial + 10% do XP total + bônus de duelos
+        self.ap = (self.ap_inicial + (0.10 * self.xp) + self.pontos_batalha_ap)
+
+        self.dp = (self.dp_inicial + (0.10 * self.xp) + self.pontos_batalha_dp)       
+
+
+def ler_pokedex(path): # Carrega a Pokédex a partir de um arquivo CSV
     pokedex = []
 
     with open(path, "r", encoding="utf-8") as arquivo:
@@ -77,7 +101,7 @@ def ler_pokedex(path):
     return pokedex
 
 
-def criar_pokemon(numero_vertices, pokedex):
+def criar_pokemon(numero_vertices, pokedex): # Sorteia uma espécie da Pokédex e atribui atributos aleatórios
     especie = random.choice(pokedex)
 
     pokemon = Pokemon(
@@ -99,6 +123,7 @@ def criar_pokemon(numero_vertices, pokedex):
 
 
 def criar_pokemons(quantidade, numero_vertices, pokedex):
+    # Instancia uma lista contendo a quantidade desejada de Pokémon aleatórios
     pokemons = []
 
     for i in range(quantidade):
@@ -113,6 +138,7 @@ def criar_pokemons(quantidade, numero_vertices, pokedex):
 
 
 def criar_pokemon_da_especie(pokedex_no, posicao, pokedex):
+    # Instancia um Pokémon de uma espécie específica buscando por seu índice na Pokédex
     especie = pokedex[pokedex_no]
     
     pokemon = Pokemon(
@@ -131,6 +157,8 @@ def criar_pokemon_da_especie(pokedex_no, posicao, pokedex):
     )
 
     return pokemon
+
+
 
 
 
